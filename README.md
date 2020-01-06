@@ -19,3 +19,5 @@ This is a application to do a minimal company/employees management.
 TODO:
  - Include docker
  - Do more tests
+ - Change the show method to decrease the n + 1 issue (like on the index action)
+ - Produce presenters to a better readability

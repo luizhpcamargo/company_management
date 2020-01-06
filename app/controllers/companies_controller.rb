@@ -13,16 +13,24 @@ class CompaniesController < ApplicationController
 
   def show
     if @company.present?
-      render json: @company.to_json, status: 200
+      result = if params[:with_employees]
+                 @company.to_json(include: :employees)
+               else
+                 @company.to_json
+               end
+      render json: result, status: 200
     else
       render json: { errors: ['Company not found'] }.to_json, status: 404
     end
   end
 
   def index
-    companies = Company.all
-
-    render json: companies.to_json, status: 200
+    companies = if params[:with_employees]
+                  Company.includes(:employees).references(:employees).all.to_json(include: :employees)
+                else
+                  Company.all.to_json
+                end
+    render json: companies, status: 200
   end
 
   def destroy

@@ -18,6 +18,7 @@ RSpec.describe EmployeesController, type: :controller do
   end
 
   let(:body) { JSON.parse(response.body) }
+  let(:parsed_company) { JSON.parse company.to_json }
 
   context '#create' do
     let(:creation) { post :create, params: params }
@@ -57,6 +58,11 @@ RSpec.describe EmployeesController, type: :controller do
       it { expect(body['errors']).to eq ['Employee not found']}
       it { expect(response.code).to eq '404' }
     end
+
+    context 'with_company' do
+      before { get :show, params: { id: employee.id, with_company: true } }
+      it { expect(body['company']).to match parsed_company }
+    end
   end
 
   context '#index' do
@@ -77,6 +83,11 @@ RSpec.describe EmployeesController, type: :controller do
       it { expect(body).to be_a Array }
       it { expect(response).to be_ok }
       it { expect(response.code).to eq '200' }
+
+      context 'with_company' do
+        before { get :index, params: { with_company: true } }
+        it { expect(body[0]['company']).to match parsed_company }
+      end
     end
   end
 

@@ -55,6 +55,17 @@ RSpec.describe CompaniesController, type: :controller do
       it { expect(body['errors']).to eq ['Company not found']}
       it { expect(response.code).to eq '404' }
     end
+
+    context 'with employees' do
+      let!(:employee) { company.employees.create(name: 'Func', document: CPF.generate, birth: '1990-02-01') }
+      let(:parsed_employee) { JSON.parse(employee.to_json) }
+
+      before do
+        get :show, params: { id: company.id, with_employees: true }
+      end
+
+      it { expect(body['employees'][0]).to match parsed_employee }
+    end
   end
 
   context '#index' do
@@ -66,15 +77,24 @@ RSpec.describe CompaniesController, type: :controller do
     it { expect(response.code).to eq '200' }
 
     context 'with content' do
-      before do
-        4.times { Company.create(document: CNPJ.generate) }
-        get :index
-      end
+      let!(:company) { Company.create(document: CNPJ.generate) }
+      let!(:companies) { 3.times { Company.create(document: CNPJ.generate) } }
+
+      before { get :index }
 
       it { expect(body.size).to eq 4 }
       it { expect(body).to be_a Array }
       it { expect(response).to be_ok }
       it { expect(response.code).to eq '200' }
+
+      context 'with employees' do
+        let!(:employee) { company.employees.create(name: 'Func', document: CPF.generate, birth: '1990-02-01') }
+        let(:parsed_employee) { JSON.parse(employee.to_json) }
+
+        before { get :index, params: { id: company.id, with_employees: true } }
+
+        it { expect(body[0]['employees'][0]).to match parsed_employee }
+      end
     end
   end
 

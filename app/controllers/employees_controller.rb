@@ -13,7 +13,12 @@ class EmployeesController < ApplicationController
 
   def show
     if @employee.present?
-      render json: @employee.to_json, status: 200
+      result = if params[:with_company]
+                 @employee.to_json(include: :company)
+               else
+                 @employee.to_json
+               end
+      render json: result, status: 200
     else
       render json: { errors: ['Employee not found'] }.to_json, status: 404
     end
@@ -21,8 +26,12 @@ class EmployeesController < ApplicationController
 
   def index
     employees = Employee.all
-
-    render json: employees.to_json, status: 200
+    result = if params[:with_company]
+               employees.joins(:company).references(:company).all.to_json(include: :company)
+             else
+               employees.to_json
+             end
+    render json: result, status: 200
   end
 
   def destroy
@@ -37,7 +46,7 @@ class EmployeesController < ApplicationController
     if @employee.update(employee_params)
       render json: @employee.to_json, status: 200
     else
-      render json: { errors: @employee.errors.full_messages}.to_json, status: 304
+      render json: { errors: @employee.errors.full_messages }.to_json, status: 304
     end
   end
 
