@@ -1,24 +1,21 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a application to do a minimal company/employees management.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
+* Ruby version: `2.5.3`
+* Rails version: `5.1.7`
 
 * Configuration
+ - `git clone git@github.com:luizhpcamargo/company_management.git`
+ - `cd company_management`
+ - `bundle install`
 
-* Database creation
-
-* Database initialization
+* Database creation and initialization
+ - `rake db:create db:migrate`
 
 * How to run the test suite
+ - `rspec spec`
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+TODO:
+ - Include docker
+ - Do more tests
