@@ -20,9 +20,9 @@ RSpec.describe CompaniesController, type: :controller do
     context 'before creation' do
       before { creation }
 
-      it { expect(response).to be_ok }
+      it { expect(response).to be_created }
       it { expect { post :create, params: params }.to_not change{ Company.count } }
-      it { expect(response.code).to eq '200' }
+      it { expect(response.code).to eq '201' }
 
       context 'calling two times' do
         let(:body) { JSON.parse(response.body) }
@@ -30,7 +30,7 @@ RSpec.describe CompaniesController, type: :controller do
 
         it { expect(response).to_not be_ok }
         it { expect(body['errors']).to eq ['Document has already been taken'] }
-        it { expect(response.code).to eq '301' }
+        it { expect(response.code).to eq '304' }
       end
     end
   end

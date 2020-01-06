@@ -3,9 +3,9 @@ class CompaniesController < ApplicationController
     company = Company.new(company_params)
 
     if company.save
-      render json: company.to_json, status: 200
+      render json: company.to_json, status: 201
     else
-      render json: { errors: company.errors.full_messages}.to_json, status: 301
+      render json: { errors: company.errors.full_messages}.to_json, status: 304
     end
   end
 
