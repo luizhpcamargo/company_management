@@ -1,4 +1,4 @@
-# README
+# Company management
 
 This is a application to do a minimal company/employees management.
 
