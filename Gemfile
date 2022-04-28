@@ -7,7 +7,7 @@ end
 
 gem 'cpf_cnpj'
 gem 'puma', '~> 3.7'
-gem 'rails', '~> 5.1.7'
+gem 'rails', '~> 5.2.7', '>= 5.2.7.1'
 gem 'sqlite3'
 
 group :development, :test do
