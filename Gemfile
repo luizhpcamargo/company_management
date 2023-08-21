@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'cpf_cnpj'
-gem 'puma', '~> 3.7'
+gem 'puma', '~> 5.6', '>= 5.6.7'
 gem 'rails', '~> 5.1.7'
 gem 'sqlite3'
 
