@@ -7,13 +7,13 @@ end
 
 gem 'cpf_cnpj'
 gem 'puma', '~> 3.7'
-gem 'rails', '~> 5.1.7'
+gem 'rails', '~> 7.0.8', '>= 7.0.8.1'
 gem 'sqlite3'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry-rails'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '>= 3.9.1'
   gem 'shoulda-matchers'
 end
 
